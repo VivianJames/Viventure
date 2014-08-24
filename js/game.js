@@ -14,16 +14,25 @@ function preload() {
 	game.load.image('sky', 'asset/sky.png');
 }
 
+var gotkey = false;
 var player;
 var bar;
+var cathedral;
 var streets;
 var sidewalks;
 var cursors;
+var sky;
+var key;
 
 function create() {
 	game.physics.startSystem(Phaser.Physics.ARCADE);
+	
+	game.world.setBounds(0, 0, 1600, 600);
 
-	game.add.sprite(0, 0, 'sky');
+	sky = game.add.sprite(0, 0, 'sky');
+	bar = game.add.sprite(0, 0, 'bar');
+	cathedral = game.add.sprite(900, -450, 'cathedral');
+	
 
 	streets = game.add.group();
 	sidewalks = game.add.group();
@@ -43,10 +52,15 @@ function create() {
 	var centralsidewalk = sidewalks.create(800, game.world.height - 50, 'sidewalk');
 	centralsidewalk.body.immovable = true;
 	
-	bar = game.add.sprite(0, 0, 'bar');
+	key = game.add.sprite(20, game.world.height - 200, 'key');
+	game.physics.arcade.enable(key);
+	key.body.bounce.y = 0.20;
+	key.body.gravity.y = 700;
+	key.body.collideWorldBounds = true;
 
-	player = game.add.sprite(32, game.world.height - 200, 'vivian');
+	player = game.add.sprite(900, game.world.height - 200, 'vivian');
 
+	
 	game.physics.arcade.enable(player);
 
 	player.body.bounce.y = 0;
@@ -54,10 +68,14 @@ function create() {
 	player.body.collideWorldBounds = true;
 
 	cursors = game.input.keyboard.createCursorKeys();
+	game.camera.follow(player);
 }
 
 function update() {
 	game.physics.arcade.collide(player, streets);
+	game.physics.arcade.collide(key, streets);
+	
+	game.physics.arcade.overlap(player, key, getKey, null, this);
 
 	if (cursors.left.isDown) {
 		player.body.velocity.x = -150;
@@ -72,4 +90,13 @@ function update() {
 	if (cursors.up.isDown && player.body.touching.down) {
 		player.body.velocity.y = -350;
 	}
+	
+	sky.x = game.camera.x;
+}
+
+function getKey(player, key){
+	key.kill();
+	
+	gotkey = true;
+	
 }
