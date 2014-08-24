@@ -1,0 +1,11 @@
+{
+  "undef": true,
+  "unused": true,
+  "browser": true,
+  "node": true,
+  "devel": true,
+  "predef": [	"requirejs",
+  						"require",
+							"define",
+							"notify"	]
+}
