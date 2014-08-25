@@ -2,7 +2,7 @@ define(function(require) {
 	'use strict';
   var Phaser = require('phaser');
   var Menu = require('app/state/menu');
-  //var Street = require('app/state/street');
+  var Street = require('app/state/street');
   
   var Game = function() {
   	var self = this,
@@ -13,7 +13,7 @@ define(function(require) {
 			
 			//Add States
 			game.state.add('main', Menu);
-	    //game.state.add('street', Street);
+	    game.state.add('street', Street);
 	    
 	    game.state.start('main');
   	};

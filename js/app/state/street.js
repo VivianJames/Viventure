@@ -2,78 +2,74 @@ define(function(require) {
 	'use strict';
   var Phaser = require('phaser');
 	var Player = require('app/entity/player');
-	var game = Phaser.game;
+	var Key = require('app/entity/key');
 	
-	var street;
+	var street = new Phaser.State();
 	
 	street.preload = function() {
-		game.load.image('vivian', 'asset/vivian.png');
-		game.load.image('cathedral', 'asset/cathedral.png');
-		game.load.image('bar', 'asset/bar.png');
-		game.load.image('street', 'asset/street.png');
-		game.load.image('sidewalk', 'asset/sidewalk.png');
-		game.load.image('key', 'asset/key.png');
-		game.load.image('sky', 'asset/sky.png');
+		street.load.image('vivian', 'asset/vivian.png');
+		street.load.image('cathedral', 'asset/cathedral.png');
+		street.load.image('bar', 'asset/bar.png');
+		street.load.image('street', 'asset/street.png');
+		street.load.image('sidewalk', 'asset/sidewalk.png');
+		street.load.image('key', 'asset/key.png');
+		street.load.image('sky', 'asset/sky.png');
 	}
 	
 	var gotkey = false;
 	var player;
 	var bar;
 	var cathedral;
-	var streets;
+	var roads;
 	var sidewalks;
 	var sky;
 	var key;
 	
 	street.create = function() {
-		game.physics.startSystem(Phaser.Physics.ARCADE);
+		street.physics.startSystem(Phaser.Physics.ARCADE);
 	
-		game.world.setBounds(0, 0, 1600, 600);
+		street.world.setBounds(0, 0, 1600, 600);
 	
-		sky = game.add.sprite(0, 0, 'sky');
-		bar = game.add.sprite(0, 0, 'bar');
-		cathedral = game.add.sprite(900, -450, 'cathedral');
+		sky = street.add.sprite(0, 0, 'sky');
+		bar = street.add.sprite(0, 0, 'bar');
+		cathedral = street.add.sprite(900, -450, 'cathedral');
 		
 	
-		streets = game.add.group();
-		sidewalks = game.add.group();
+		roads = street.add.group();
+		sidewalks = street.add.group();
 	
-		streets.enableBody = true;
+		roads.enableBody = true;
 		sidewalks.enableBody = true;
 	
-		var barstreet = streets.create(0, game.world.height - 34, 'street');
-		barstreet.body.immovable = true;
+		var barroad = roads.create(0, street.world.height - 34, 'street');
+		barroad.body.immovable = true;
 		
-		var centralstreet = streets.create(800, game.world.height - 34, 'street');
-		centralstreet.body.immovable = true;
+		var centralroad = roads.create(800, street.world.height - 34, 'street');
+		centralroad.body.immovable = true;
 		
-		var barsidewalk = sidewalks.create(0, game.world.height - 50, 'sidewalk');
+		var barsidewalk = sidewalks.create(0, street.world.height - 50, 'sidewalk');
 		barsidewalk.body.immovable = true;
 		
-		var centralsidewalk = sidewalks.create(800, game.world.height - 50, 'sidewalk');
+		var centralsidewalk = sidewalks.create(800, street.world.height - 50, 'sidewalk');
 		centralsidewalk.body.immovable = true;
 		
-		key = game.add.sprite(20, game.world.height - 200, 'key');
-		game.physics.arcade.enable(key);
-		key.body.bounce.y = 0.20;
-		key.body.gravity.y = 700;
-		key.body.collideWorldBounds = true;
+		key = new Key(street, 20, street.world.height - 200);
 	
-		player = new Player(game);
+		player = new Player(street);
 	
-		game.camera.follow(player);
+		street.camera.follow(player);
 	};
 	
 	street.update = function() {
-  	game.physics.arcade.collide(player, streets);
-		game.physics.arcade.collide(key, streets);
+  	street.physics.arcade.collide(player, roads);
+		street.physics.arcade.collide(key, roads);
 		
-		game.physics.arcade.overlap(player, key, function(player, key) {
+		street.physics.arcade.overlap(player, key, function(player, key) {
 			key.kill();
 			gotkey = true;
 		}, null, this);
 		
-		sky.x = game.camera.x;
+		sky.x = street.camera.x;
 	};
 	
 	return street;

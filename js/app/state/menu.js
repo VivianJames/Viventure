@@ -1,22 +1,25 @@
 define(function(require) {
 	'use strict';
   var Phaser = require('phaser');
-  var game = Phaser.game;
   
-  var menu;
+  var menu = new Phaser.State();
 	
 	menu.preload = function() {
-		game.load.image('vivian', 'asset/vivian.png');
+		menu.load.spritesheet('startbutton', 'asset/startbutton.png', 100, 60);
   };
   
-  var vivian;	
+
+  var btnstart;
   
   menu.create = function() {
-		vivian = game.add.sprite(20, 20, 'vivian');
+		btnstart = menu.add.button(menu.world.centerX - 50, menu.world.centerY - 30, 'startbutton', function(){
+		  menu.game.state.start('street');
+		}, this, 1, 0);
+		
   };
   	
   menu.update = function() {
-
+    
   };
   
   return menu;
