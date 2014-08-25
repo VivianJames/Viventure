@@ -1,18 +1,17 @@
-html, body {
+html,
+body {
 	background-color: black;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
-
 #h1Title {
-	color:white;
+	color: white;
 	text-align: center;
 	margin: 0;
 	padding: 0.5%;
 }
-
 #divGame {
 	width: 800px;
 	height: 600px;
