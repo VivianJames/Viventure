@@ -5,9 +5,8 @@ define(function(require) {
   var menu = new Phaser.State();
 	
 	menu.preload = function() {
-		menu.load.spritesheet('startbutton', 'asset/startbutton.png', 100, 60);
+	  
   };
-  
 
   var btnstart;
   

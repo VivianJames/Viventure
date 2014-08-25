@@ -7,14 +7,8 @@ define(function(require) {
 	var street = new Phaser.State();
 	
 	street.preload = function() {
-		street.load.image('vivian', 'asset/vivian.png');
-		street.load.image('cathedral', 'asset/cathedral.png');
-		street.load.image('bar', 'asset/bar.png');
-		street.load.image('street', 'asset/street.png');
-		street.load.image('sidewalk', 'asset/sidewalk.png');
-		street.load.image('key', 'asset/key.png');
-		street.load.image('sky', 'asset/sky.png');
-	}
+
+	};
 	
 	var gotkey = false;
 	var player;

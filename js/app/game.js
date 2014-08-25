@@ -3,6 +3,7 @@ define(function(require) {
   var Phaser = require('phaser');
   var Menu = require('app/state/menu');
   var Street = require('app/state/street');
+  var Preloader = require('app/state/preloader');
   
   var Game = function() {
   	var self = this,
@@ -12,10 +13,11 @@ define(function(require) {
 			game = new Phaser.Game(800, 600, Phaser.AUTO, 'divGame');
 			
 			//Add States
-			game.state.add('main', Menu);
+			game.state.add('preloader', Preloader);
+			game.state.add('menu', Menu);
 	    game.state.add('street', Street);
 	    
-	    game.state.start('main');
+	    game.state.start('preloader');
   	};
   	
   };
